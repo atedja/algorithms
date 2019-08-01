@@ -1,11 +1,11 @@
-# We are using breadth-first search and iterate all possible actions given the buckets
+# We are using breadth-first search and iterate all possible sequences using the given buckets
 # Once all the solutions have been traversed, we sort them and pick the shortest one
 
-# This holds the final solution.
+# This ultimately holds the final solution.
 # Key is the amount and Value is the sequence.
 result = {}
 
-# Keeps track of traversed node.
+# Keeps track of traversed node so we are not visiting the same node again.
 # A dict of bucket values to bool.
 visited = {}
 
@@ -21,7 +21,7 @@ def water_buckets(amount, bucket):
     while len(q) > 0:
         current_seq = q.pop(0)
         for i, b in enumerate(bucket):
-            last_bucket = current_seq[0][:]
+            last_bucket = current_seq[-1][:]
 
             # Add current sequence to the result
             # Duplicates are okay, we will sort them later
@@ -35,7 +35,7 @@ def water_buckets(amount, bucket):
                 nb[i] = bucket[i]
                 if not repr(nb) in visited:
                     visited[repr(nb)] = True
-                    q.append([nb] + current_seq)
+                    q.append(current_seq + [nb])
 
             # Dump bucket
             if last_bucket[i] > 0:
@@ -43,7 +43,7 @@ def water_buckets(amount, bucket):
                 nb[i] = 0
                 if not repr(nb) in visited:
                     visited[repr(nb)] = True
-                    q.append([nb] + current_seq)
+                    q.append(current_seq + [nb])
 
                 # Since bucket not empty, we can dump this bucket to another
                 for j, b in enumerate(bucket):
@@ -56,11 +56,10 @@ def water_buckets(amount, bucket):
                         nb[j] += diff
                         if not repr(nb) in visited:
                             visited[repr(nb)] = True
-                            q.append([nb] + current_seq)
+                            q.append(current_seq + [nb])
 
     for v, sols in result.items():
         shortest = sorted(sols, key=len)[0]
-        shortest.reverse()
         result[v] = shortest
 
     if amount in result:
@@ -68,4 +67,4 @@ def water_buckets(amount, bucket):
     else:
         return None
 
-print(water_buckets(2, [1, 3, 5]))
+print(water_buckets(4, [1, 3, 5]))
