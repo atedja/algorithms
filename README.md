@@ -1,5 +1,3 @@
 # algorithms
 
-Collection of various algorithms problems.
-
-Not meant to be used for anything.
+Personal collection of various algorithms problems and their solutions.
