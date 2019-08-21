@@ -34,9 +34,9 @@ func reverseNode(n *node) *node {
 	o := n.next
 	n.next = nil
 	for o != nil {
-		nx := o.next
+		p := o.next
 		o.next = n
-		n, o = o, nx
+		n, o = o, p
 	}
 
 	return n
