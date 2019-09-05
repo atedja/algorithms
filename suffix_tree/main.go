@@ -103,14 +103,15 @@ func printSuffixTree(n *node, level int) {
 
 func printTabs(n int) {
 	for i := 0; i < n; i++ {
-		fmt.Printf("\t")
+		fmt.Printf("  ")
 	}
 }
 
 func main() {
 	//str := "aaababaaaba"
-	str := "bananananananananananananananananabatman"
-	//str := "foobarfoo"
+	//str := "bananananananananananananananananabatman"
+	//str := "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+	str := "foobarfoo"
 	root := generateSuffixTree(str)
 	fmt.Println(str)
 	printSuffixTree(root, 0)
