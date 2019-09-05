@@ -92,11 +92,8 @@ func printSuffixTree(n *node, level int) {
 	}
 
 	for k, v := range n.edges {
-		if k == "" {
-			k = "$"
-		}
 		printTabs(level)
-		fmt.Printf("%s\\\n", k)
+		fmt.Printf("%s/\n", k)
 		printSuffixTree(v, level+1)
 	}
 }
@@ -113,6 +110,6 @@ func main() {
 	//str := "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 	str := "foobarfoo"
 	root := generateSuffixTree(str)
-	fmt.Println(str)
+	fmt.Println("String:", str)
 	printSuffixTree(root, 0)
 }
