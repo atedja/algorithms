@@ -17,8 +17,9 @@ func newNode(i int) *node {
 	return n
 }
 
-// Given two strings a and b, returns the index where a and b differ
-// Index returned cannot be greater than the shorter string
+// Given two strings a and b, returns the index where a and b differ.
+// If it returns 0 then a and b are two completely different strings.
+// Index returned cannot be greater than the shorter string.
 func findSplitIndex(a string, b string) int {
 	i := 0
 	for ; i < len(a) && i < len(b); i++ {
@@ -40,25 +41,41 @@ func generateSuffixTree(input string) *node {
 				break
 			}
 
+			// look for the edge that begins with the same key we are looking up
 			found := false
-			for k, v := range current.edges {
-				// look for the edge that begins with the same key we are looking up
-				si := findSplitIndex(k, lookup)
-				if si == 0 {
-					continue
+			var k string = ""
+			var v *node = nil
+			si := 0
+			for k, v = range current.edges {
+				si = findSplitIndex(k, lookup)
+				if si > 0 {
+					found = true
+					break
 				}
-
-				found = true
-				delete(root.edges, k)
-				inode := newNode(-1)
-				root.edges[k[:si]] = inode
-				inode.edges[k[si:]] = v
-				current = inode
-				lookup = lookup[si:]
-				break
 			}
 
-			if !found {
+			if found {
+				if si == len(lookup) && si == len(k) {
+					_, ok := v.edges[""]
+					if ok {
+						panic("already exist")
+					}
+
+					v.edges[""] = newNode(i)
+					current = nil
+				} else if si == len(k) {
+					lookup = lookup[si:]
+					current = v
+				} else {
+					delete(current.edges, k)
+					inode := newNode(-1)
+					current.edges[k[:si]] = inode
+					inode.edges[k[si:]] = v
+					current = inode
+					lookup = lookup[si:]
+				}
+
+			} else {
 				// no key is found, insert a new one
 				current.edges[lookup] = newNode(i)
 				break
@@ -96,6 +113,10 @@ func printTabs(n int) {
 }
 
 func main() {
-	root := generateSuffixTree("geeksforgeeks")
+	str := "aaababaaaba"
+	//str := "geeksforgeeks"
+	//str := "banana"
+	root := generateSuffixTree(str)
+	fmt.Println(str)
 	printSuffixTree(root, 0)
 }
