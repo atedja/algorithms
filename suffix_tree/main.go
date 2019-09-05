@@ -56,11 +56,6 @@ func generateSuffixTree(input string) *node {
 
 			if found {
 				if si == len(lookup) && si == len(k) {
-					_, ok := v.edges[""]
-					if ok {
-						panic("already exist")
-					}
-
 					v.edges[""] = newNode(i)
 					current = nil
 				} else if si == len(k) {
@@ -113,9 +108,9 @@ func printTabs(n int) {
 }
 
 func main() {
-	str := "aaababaaaba"
-	//str := "geeksforgeeks"
-	//str := "banana"
+	//str := "aaababaaaba"
+	str := "bananananananananananananananananabatman"
+	//str := "foobarfoo"
 	root := generateSuffixTree(str)
 	fmt.Println(str)
 	printSuffixTree(root, 0)
